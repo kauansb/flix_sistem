@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/css/movies_list.css' %}">
+
+
+<div class="contain">
+  {% if genres %}
+    {% for genre in genres %}
+    <div class="slider">
+        <h3>{{ genre.name }}</h3>
+        <span onmouseover="scrollEsquerda()" onmouseout="clearScroll()" class="handle handlePrev active">
+          <i class="fa fa-caret-left" aria-hidden="true"></i>
+        </span>
+
+        <div id="scroller" class="row">
+          <div class="row__inner">
+            {% for movie in genre.movies.all %}
+            <div class="gui-card">
+                <div class="gui-card__media">
+                  {% if movie.photo %}
+                    <img class="gui-card__img" src="{{ movie.photo.url }}" alt="Poster de {{ movie.title }}" />
+                  {% else %}
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Imagem padrão">
+                  {% endif %}
+                </div>
+              <a href="{% url 'movie_detail' movie.pk %}">
+                <div class="gui-card__details">
+                  <div class="gui-card__title">{{ movie.title }}</div>
+                </div>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <span onmouseover="scrollDireita()" onmouseout="clearScroll()" class="handle handleNext active">
+          <i class="fa fa-caret-right" aria-hidden="true"></i>
+        </span>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p>Nenhum filme encontrado.</p>
+  {% endif %}
+</div>
+
+
+<script src="{% static 'movies/js/movies_list.js' %}"></script>
+{% endblock %}

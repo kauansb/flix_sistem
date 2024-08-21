@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+      <h1 class="card-title">Deletar Filme</h1>
+    </div>
+    <div class="card-body">
+      <p>Tem certeza que deseja deletar o Filme <strong>{{ object.title }} {{ object.model }}</strong>?</p>
+      <form method="post">
+        {% csrf_token %}
+        <div class="buttons-container">
+          <button type="submit" class="btn btn-danger">Deletar Filme</button>
+          <a href="{% url 'movies_list' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

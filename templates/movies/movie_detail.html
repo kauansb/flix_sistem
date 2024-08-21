@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/css/movie_detail.css' %}">
+
+
+<div class="banner">
+    <img src="{{ movie.photo.url }}" class="bg">
+
+    <div class="content">
+        <h1 class="movieTitle"> {{movie.title}} </h1>
+        <h4>
+            <span> {{ movie.release_date|date:"Y" }} </span>
+            <span><i> {{movie.maturity_rate}}+ </i></span>
+            {% if movie.duration %}
+                <span>{{ movie.get_duration_display }}</span>
+            {% else %}
+                <span> Duração não disponível </span>
+            {% endif %}
+            <span>{{movie.genre.name}}</span>
+        </h4>
+        <p>
+            {{movie.resume}}
+        </p>
+        <h4> Estrelando: 
+            {% for actor in movie.actors.all %}
+                {{ actor.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </h4>
+    {% if user.is_authenticated %}
+        <div class="buttons">
+        {% if perms.movies.change_movie %}
+            <a href="{% url 'movie_update' pk=object.pk %}"> Editar Filme</a>
+        {% endif %}
+        {% if perms.movies.delete_movie %}
+            <a href="{% url 'movie_delete' pk=object.pk %}"> Deletar Filme</a>
+        {% endif %}
+        </div>
+    {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/css/form_movie.css' %}">
+
+<main>
+    <div class="form_body">
+        <h2>Editar Filme</h2>
+        <form enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            {{ form.as_p }} 
+            <button type="submit">Salvar Alterações</button>
+            <a href="{% url 'movies_list' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</main>
+
+{% endblock %}
